@@ -10,8 +10,8 @@
         <span v-else>Saknas</span>
       </p>
       <div class="button-group">
-        <button @click="$emit('edit')" class="button edit-button">✏️ Redigera</button>
-        <button @click="$emit('delete')" class="button delete-button">🗑 Radera</button>
+        <button @click="$emit('edit')" class="button edit-button">✏️ Redigera </button>
+        <button @click="$emit('delete')" class="button delete-button">🗑 Radera </button>
       </div>
     </template>
 
