@@ -1,3 +1,12 @@
+-- 🔗 Connect to the Database
+-- To connect the backend to your MySQL database, create a .env file in the Backend folder with your own credentials:
+-- DB_HOST=localhost
+-- DB_USER=root
+-- DB_PASSWORD=your_password_here
+-- DB_NAME=booking_db
+-- Replace your_password_here with your actual MySQL root password.
+
+
 -- 🛠️ Skapa databas
 CREATE DATABASE IF NOT EXISTS booking_db;
 USE booking_db;
