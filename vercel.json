@@ -4,12 +4,20 @@
     {
       "src": "Backend/api/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
     {
-      "src": "/send",
+      "src": "/api/(.*)",
       "dest": "Backend/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
     }
   ]
 }

@@ -3,11 +3,23 @@
 
 Vårdappen är en Vue 3 + Express.js-baserad webbtjänst där patienter kan registrera sig, logga in med engångskod (OTP), och boka videomöten med läkare.
 
+# Info
+
+All backend and frontend updates have been checked and completed. The project is hosted on Railway for the server, and both the project and the Railway server are deployed on Vercel, so everything is working fine.
+
+For the doctor admin demo, the password is 123456.
+
+The login function works via OTP SMS code. You enter your phone number, and if the authentication system detects that an account hasn’t been created with that number yet, you’ll be asked to enter your details — this means it’s your first time logging in. The next time, you can log in directly using just your phone number and the SMS code.
+
+Here is the Vercel website where you can test the app:
+👉 https://app-care.vercel.app/
+
 ---
 
 ## 🧭 Innehåll
 
 - [🩺 Vårdappen – Boka läkarmöte enkelt med OTP-inloggning](#-vårdappen--boka-läkarmöte-enkelt-med-otp-inloggning)
+- [Info](#info)
   - [🧭 Innehåll](#-innehåll)
   - [✅ Funktioner](#-funktioner)
   - [⚙️ Teknikstack](#️-teknikstack)
