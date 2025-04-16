@@ -2,7 +2,10 @@
   <div class="booking-container">
     <div class="logout-area">
       <span>Inloggad som: {{ name }}</span>
-      <button @click="logout" class="logout-button">🚪 Logga ut</button>
+      <button @click="logout" class="logout-button">
+  <span class="icon-text">🚪 Logga ut</span>
+</button>
+
       <button @click="deleteAccount" class="logout-button" style="background-color: #c0392b">🗑 Radera konto</button>
     </div>
 
@@ -101,7 +104,9 @@ const playSound = (type) => {
   const sounds = {
     success: '/sounds/success.mp3',
     error: '/sounds/error.mp3',
-    info: '/sounds/info.mp3'
+    info: '/sounds/info.mp3',
+    logout: '/sounds/logout.mp3'
+    
   };
   const sound = new Audio(sounds[type] || sounds.info);
   sound.volume = 0.7;
@@ -173,7 +178,7 @@ watch(selectedDate, async () => {
 const logout = () => {
   localStorage.removeItem('loggedInUser');
   localStorage.removeItem('patientPhone');
-  playSound('info');
+  playSound('logout');
   router.push('/login');
 };
 
@@ -312,11 +317,20 @@ const generateMeetingLink = async () => {
 .logout-button {
   background-color: #e74c3c;
   color: white;
-  padding: 6px 12px;
+  padding: 12px 12px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  margin: 6px;
+  display: inline-block;
+  white-space: nowrap; 
+}
+
+.icon-text {
+  display: inline-flex; 
+  align-items: center;
+  gap: 6px;                
 }
 
 .booking-container__title {

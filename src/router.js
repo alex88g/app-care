@@ -37,7 +37,8 @@ const playSound = (type) => {
   const sounds = {
     success: "/sounds/success.mp3",
     error: "/sounds/error.mp3",
-    info: "/sounds/info.mp3"
+    info: "/sounds/info.mp3",
+    logout: "/sounds/logout.mp3"
   };
   const audio = new Audio(sounds[type] || sounds.info);
   audio.volume = 0.7;

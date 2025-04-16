@@ -65,6 +65,20 @@ const search = ref('');
 const doctorName = ref('');
 const sortOrder = ref('asc');
 
+const playSound = (type) => {
+  const sounds = {
+    success: "/sounds/success.mp3",
+    error: "/sounds/error.mp3",
+    info: "/sounds/info.mp3",
+    logout: "/sounds/logout.mp3"
+  };
+
+  const audio = new Audio(sounds[type] || sounds.success);
+  audio.volume = 0.7;
+  audio.play().catch(() => {});
+};
+
+
 const fetchBookings = async () => {
   isLoading.value = true;
   try {
@@ -222,6 +236,7 @@ const exportPDF = () => {
 
 const logout = () => {
   localStorage.clear();
+  playSound('logout');
   router.push('/doctor-login');
 };
 
@@ -303,6 +318,7 @@ onMounted(() => {
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 20px;
+  margin-left: 10px;
   transition: background 0.2s ease;
 }
 

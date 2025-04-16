@@ -65,6 +65,19 @@ const isLoggedIn = ref(false);
 const isDoctor = ref(false);
 const userName = ref('');
 
+const playSound = (type) => {
+  const sounds = {
+    success: "/sounds/success.mp3",
+    error: "/sounds/error.mp3",
+    info: "/sounds/info.mp3",
+    logout: "/sounds/logout.mp3"
+  };
+
+  const audio = new Audio(sounds[type] || sounds.success);
+  audio.volume = 0.7;
+  audio.play().catch(() => {});
+};
+
 onMounted(() => {
   const doctor = JSON.parse(localStorage.getItem('loggedInDoctor'));
   const patient = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -86,6 +99,7 @@ const logout = () => {
   isLoggedIn.value = false;
   isDoctor.value = false;
   userName.value = '';
+  playSound('logout');
   router.push('/');
 };
 </script>
