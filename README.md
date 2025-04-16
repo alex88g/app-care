@@ -15,6 +15,7 @@ Vårdappen är en Vue 3 + Express.js-baserad webbtjänst där patienter kan regi
   - [🛠️ Installation](#️-installation)
   - [🗺 ER-Diagram](#-er-diagram)
   - [🧮 Databasstruktur (MySQL)](#-databasstruktur-mysql)
+  - [Database Connection to MySql (db.js)](#database-connection-to-mysql-dbjs)
     - [Tabeller:](#tabeller)
   - [🔌 API-rutter (Express)](#-api-rutter-express)
     - [Patienter:](#patienter)
@@ -136,6 +137,13 @@ npm run dev
 ---
 
 ## 🧮 Databasstruktur (MySQL)
+
+## Database Connection to MySql (db.js)
+
+- DB_HOST=localhost
+- DB_USER=root
+- DB_PASSWORD=your_password_here
+- DB_NAME=booking_db
 
 ### Tabeller:
 - `Patients`: namn, telefon, personnummer, e-post
