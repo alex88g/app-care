@@ -6,13 +6,14 @@
       "use": "@vercel/node"
     },
     {
-      "src": "vite.config.js",
+      "src": "package.json",
       "use": "@vercel/static-build"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/api/send",
+      "methods": ["POST"],
       "dest": "/Backend/api/index.js"
     },
     {
