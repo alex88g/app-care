@@ -65,7 +65,7 @@
         router.push('/doctor');
       } else {
         errorMessage.value = '❌ Ogiltig kod. Försök igen.';
-        play('error');
+        playSound('error');
       }
     } catch (error) {
         playSound('error');
