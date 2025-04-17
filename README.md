@@ -1,4 +1,32 @@
 
+## 🧭 Innehåll
+
+- [🩺 Vårdappen – Boka läkarmöte enkelt med OTP-inloggning](#-vårdappen--boka-läkarmöte-enkelt-med-otp-inloggning)
+- [Info](#info)
+- [Vårdappen – Bokningsflöde 📱💬](#vårdappen--bokningsflöde-)
+    - [](#)
+    - [](#-1)
+    - [](#-2)
+    - [](#-3)
+    - [](#-4)
+    - [📄 Exporterat innehåll – Exempel på genererad PDF](#-exporterat-innehåll--exempel-på-genererad-pdf)
+  - [✅ Funktioner](#-funktioner)
+  - [⚙️ Teknikstack](#️-teknikstack)
+  - [📁 Projektstruktur](#-projektstruktur)
+  - [🛠️ Installation](#️-installation)
+  - [🗺 ER-Diagram](#-er-diagram)
+  - [🧮 Databasstruktur (MySQL)](#-databasstruktur-mysql)
+  - [Database Connection to MySql (db.js)](#database-connection-to-mysql-dbjs)
+    - [Tabeller:](#tabeller)
+  - [🔌 API-rutter (Express)](#-api-rutter-express)
+    - [Patienter:](#patienter)
+    - [OTP:](#otp)
+    - [Läkare:](#läkare)
+    - [Bokningar:](#bokningar)
+  - [📄 Licens](#-licens)
+
+---
+
 # 🩺 Vårdappen – Boka läkarmöte enkelt med OTP-inloggning
 
 Vårdappen är en Vue 3 + Express.js-baserad webbtjänst där patienter kan registrera sig, logga in med engångskod (OTP), och boka videomöten med läkare.
@@ -16,25 +44,79 @@ Here is the Vercel website where you can test the app:
 
 ---
 
-## 🧭 Innehåll
+---
 
-- [🩺 Vårdappen – Boka läkarmöte enkelt med OTP-inloggning](#-vårdappen--boka-läkarmöte-enkelt-med-otp-inloggning)
-- [Info](#info)
-  - [🧭 Innehåll](#-innehåll)
-  - [✅ Funktioner](#-funktioner)
-  - [⚙️ Teknikstack](#️-teknikstack)
-  - [📁 Projektstruktur](#-projektstruktur)
-  - [🛠️ Installation](#️-installation)
-  - [🗺 ER-Diagram](#-er-diagram)
-  - [🧮 Databasstruktur (MySQL)](#-databasstruktur-mysql)
-  - [Database Connection to MySql (db.js)](#database-connection-to-mysql-dbjs)
-    - [Tabeller:](#tabeller)
-  - [🔌 API-rutter (Express)](#-api-rutter-express)
-    - [Patienter:](#patienter)
-    - [OTP:](#otp)
-    - [Läkare:](#läkare)
-    - [Bokningar:](#bokningar)
-  - [📄 Licens](#-licens)
+# Vårdappen – Bokningsflöde 📱💬
+
+Här är en genomgång av bokningsflödet i vårdappen, steg för steg med tillhörande skärmbilder:
+
+### 
+📄 Startskärm – Vårdappen introduktion och val 
+
+🔐 Inloggning – Ange telefonnummer 
+
+📝 Registrering – Om numret inte finns
+<p align='center'>
+<img src='dist/resized/booking1.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking2.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking3.png' width='30%' style='margin: 5px;'>
+</p>
+
+###
+
+✅ Kodverifiering – Ange engångskod
+
+📅 Bokningsformulär – Välj datum och tid
+
+🔗 Möteslänk genererad – Bekräftelse på skärm och e-post
+
+<p align='center'>
+<img src='dist/resized/booking4.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking5.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking6.png' width='30%' style='margin: 5px;'>
+</p>
+
+
+### 
+
+
+### 
+
+📋 Meny – Navigera mellan sidor
+
+🎥 Jitsi möte – Videomöte via möteslänk
+
+👨‍⚕️ Läkarinloggning – Endast för administratörer
+
+<p align='center'>
+<img src='dist/resized/booking8.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking7.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking9.png' width='30%' style='margin: 5px;'>
+
+</p>
+
+### 
+
+
+
+🗂️ Läkarpanel – Bokningar med redigering och radering
+
+🔃 Sortering – Välj sorteringsordning för bokningar
+
+⏰ Läkarvy – Redigera tid för befintlig bokning
+
+<p align='center'>
+<img src='dist/resized/booking10.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking11.png' width='30%' style='margin: 5px;'>
+<img src='dist/resized/booking12.png' width='30%' style='margin: 5px;'>
+
+</p>
+
+
+### 📄 Exporterat innehåll – Exempel på genererad PDF
+<p align='center'>
+<img src='dist/resized/booking13.png' width='30%' style='margin: 5px;'>
+</p>
 
 ---
 
