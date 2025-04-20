@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-const API_BASE = `${BASE_URL}/api`;
+const API_BASE = '/api'; 
 
 const formatPhone = (phone) => {
   return phone.startsWith('+46') ? phone : '+46' + phone.replace(/^0/, '');
