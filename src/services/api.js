@@ -25,14 +25,14 @@ const api = {
       email,
     }),
 
-  deletePatient: (id) =>
-    axios.delete(`${API_BASE}/auth/patients/${id}`),
-
   checkPhone: (phone) =>
     axios.post(`${API_BASE}/auth/patients/check-phone`, { phone: formatPhone(phone) }),
 
   loginDoctor: (code) =>
     axios.post(`${API_BASE}/auth/doctors/login`, { code }),
+
+  deletePatient: (id) =>
+    axios.delete(`${API_BASE}/patients/${id}`),
 
   getBookings: () =>
     axios.get(`${API_BASE}/bookings`),

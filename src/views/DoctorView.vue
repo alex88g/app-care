@@ -53,7 +53,6 @@ import { useRouter } from 'vue-router';
 import DoctorCard from '../components/DoctorCard.vue';
 import Toast from '../components/Toast.vue';
 import api from '../services/api';
-import axios from 'axios';
 import jsPDF from 'jspdf';
 
 const router = useRouter();
@@ -64,8 +63,6 @@ const toastMessage = ref('');
 const search = ref('');
 const doctorName = ref('');
 const sortOrder = ref('asc');
-
-const API_BASE = '/api';
 
 const playSound = (type) => {
   const sounds = {
@@ -83,7 +80,6 @@ const fetchBookings = async () => {
   isLoading.value = true;
   try {
     const response = await api.getBookings();
-    console.log("📥 Hämtade bokningar:", response.data.data);
     bookings.value = response.data.data.map(b => ({
       ...b,
       isEditing: false,
@@ -119,7 +115,7 @@ const updateAvailableTimes = async (booking) => {
   }
 
   try {
-    const res = await axios.get(`${API_BASE}/bookings/available-times?date=${booking.date}`);
+    const res = await api.getAvailableTimes(booking.date);
     let times = res.data.available;
 
     if (isToday) {
@@ -144,7 +140,7 @@ const editBooking = index => {
   const bookingDateTime = new Date(`${booking.date}T${booking.time}`);
   if (bookingDateTime <= now) {
     toastMessage.value = '⛔ Du kan inte redigera passerade tider.';
-    new Audio('/sounds/error.mp3').play().catch(() => {});
+    playSound('error');
     return;
   }
   booking.isEditing = true;
@@ -161,15 +157,17 @@ const saveBooking = async index => {
     });
     booking.isEditing = false;
     toastMessage.value = 'Bokning uppdaterad!';
-    setTimeout(() => toastMessage.value = '', 3000);
+    playSound('success');
   } catch {
     toastMessage.value = 'Kunde inte uppdatera bokningen.';
+    playSound('error');
   }
 };
 
 const cancelEdit = () => {
   fetchBookings();
   toastMessage.value = 'Redigering avbruten.';
+  playSound('info');
 };
 
 const deleteBooking = async index => {
@@ -179,9 +177,10 @@ const deleteBooking = async index => {
       await api.deleteBooking(id);
       bookings.value.splice(index, 1);
       toastMessage.value = 'Bokning raderad!';
-      setTimeout(() => toastMessage.value = '', 3000);
+      playSound('success');
     } catch {
       toastMessage.value = 'Kunde inte radera bokningen.';
+      playSound('error');
     }
   }
 };
@@ -249,7 +248,6 @@ onMounted(() => {
   });
 });
 </script>
-
 
 <style scoped>
 .booking-container {
