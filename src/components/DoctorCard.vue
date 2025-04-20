@@ -50,6 +50,8 @@ defineEmits(['edit', 'save', 'cancel', 'delete']);
 const availableHours = ref([]);
 const today = new Date().toISOString().split('T')[0];
 
+const API_BASE = import.meta.env.VITE_API_URL + '/api';
+
 const formattedDate = computed(() => {
   if (!props.booking.date) return 'Okänd';
   const d = new Date(props.booking.date);
@@ -108,7 +110,7 @@ watch(() => props.booking.date, async (newDate) => {
   }
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/bookings/available-times?date=${newDate}`);
+    const res = await axios.get(`${API_BASE}/bookings/available-times?date=${newDate}`);
     availableHours.value = res.data.available;
   } catch (err) {
     window.dispatchEvent(new CustomEvent('global-toast', {
@@ -117,6 +119,7 @@ watch(() => props.booking.date, async (newDate) => {
   }
 });
 </script>
+
 
 <style scoped>
 .doctor-card {

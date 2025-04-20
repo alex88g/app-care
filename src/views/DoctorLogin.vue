@@ -36,6 +36,7 @@
   const router = useRouter();
   const { playSound } = useToastSound();
 
+  const API_BASE = '/api';
   
   const handleLogin = async () => {
     errorMessage.value = '';
@@ -51,7 +52,7 @@
     }
   
     try {
-      const response = await axios.post('http://localhost:3000/api/doctors/login', {
+      const response = await axios.post(`${API_BASE}/doctors/login`, {
         code: trimmedCode
       });
   
@@ -68,7 +69,7 @@
         playSound('error');
       }
     } catch (error) {
-        playSound('error');
+      playSound('error');
       if (error.response?.status === 401) {
         errorMessage.value = '❌ Fel kod. Behörighet saknas.';
       } else {
@@ -79,7 +80,9 @@
       isLoading.value = false;
     }
   };
-  </script>
+</script>
+
+  
   
   <style scoped>
 .login-container {

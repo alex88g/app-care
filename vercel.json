@@ -1,23 +1,12 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "ignoreCommand": "",
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "Backend/api/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "Backend/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/$1"
+      "source": "/api/(.*)",
+      "destination": "https://app-care-db-production.up.railway.app/api/$1"
     }
   ]
 }

@@ -1,69 +1,48 @@
 <script setup>
-import { ref, onMounted, nextTick, watch } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 
 const chatMessages = ref([]);
 const newMessage = ref("");
 const chatBox = ref(null);
-const STORAGE_KEY = "chat_messages";
 const router = useRouter();
-
-const allowedKeywords = [
-  "boka", "bokning", "läkartid", "tid", "avboka", "mina bokningar",
-  "hur bokar jag", "ändra en bokning", "navigera till bokning",
-  "hur hittar jag mina bokningar", "avbokning", "läkare", "vård", "patient",
-  "support", "hjälp med bokning", "möteslänk", "skapa möte", "akut vård"
-];
+const STORAGE_KEY = "chat_messages";
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 onMounted(() => {
-  const savedMessages = localStorage.getItem(STORAGE_KEY);
-  if (savedMessages) {
-    chatMessages.value = JSON.parse(savedMessages);
-  }
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) chatMessages.value = JSON.parse(saved);
 });
 
-watch(chatMessages, (newMessages) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(newMessages));
-}, { deep: true });
-
 const sendMessage = async () => {
-  if (newMessage.value.trim() === "") return;
+  const message = newMessage.value.trim();
+  if (!message) return;
 
-  chatMessages.value.push({ sender: 'user', text: newMessage.value });
-  await nextTick();
-  chatBox.value.scrollTop = chatBox.value.scrollHeight;
+  chatMessages.value.push({ sender: 'user', text: message });
+  newMessage.value = "";
+  await nextTick(() => chatBox.value.scrollTop = chatBox.value.scrollHeight);
 
-  handleNavigation(newMessage.value);
-
-  if (!isRelevantQuestion(newMessage.value)) {
-    chatMessages.value.push({
-      sender: 'chatgpt',
-      text: "Tyvärr, vi svarar endast på frågor som rör vårdappen, bokningar och navigering till bokningar."
-    });
-    newMessage.value = "";
-    return;
-  }
+  // Lokal frontend-ruttstyrning (valfri, kan tas bort om du inte vill ha detta)
+  handleNavigation(message);
 
   try {
-    const response = await fetch('http://localhost:3000/api/chat', {
+    const res = await fetch(`${API_BASE}/api/chat`, {
       method: 'POST',
-      body: JSON.stringify({
-        message: newMessage.value,
-        context: "booking_assistance"
-      }),
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
     });
 
-    const data = await response.json();
-    chatMessages.value.push({ sender: 'chatgpt', text: data.response });
-  } catch (error) {
-    chatMessages.value.push({ sender: 'chatgpt', text: "Ett fel uppstod. Försök igen senare." });
+    const data = await res.json();
+    chatMessages.value.push({
+      sender: 'chatgpt',
+      text: data?.response || "⚠️ Inget svar från servern."
+    });
+  } catch (err) {
+    console.error("❌ Fel vid hämtning:", err);
+    chatMessages.value.push({ sender: 'chatgpt', text: "❌ Ett fel uppstod. Försök igen senare." });
   }
 
-  await nextTick();
-  chatBox.value.scrollTop = chatBox.value.scrollHeight;
-
-  newMessage.value = "";
+  await nextTick(() => chatBox.value.scrollTop = chatBox.value.scrollHeight);
 };
 
 const clearChat = () => {
@@ -71,25 +50,22 @@ const clearChat = () => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
-const handleNavigation = (message) => {
-  const lowerMessage = message.toLowerCase();
-
-  if (lowerMessage.includes("boka tid") || lowerMessage.includes("hur bokar jag en tid")) {
+const handleNavigation = (msg) => {
+  const m = msg.toLowerCase();
+  if (m.includes("boka tid") || m.includes("hur bokar")) {
     router.push('/bookings');
-    chatMessages.value.push({ sender: 'chatgpt', text: "✅ Jag har skickat dig till bokningssidan. Välj datum, tid och fyll i din information." });
-  } else if (lowerMessage.includes("mina bokningar") || lowerMessage.includes("mina tider")) {
+    chatMessages.value.push({ sender: 'chatgpt', text: "✅ Jag skickade dig till bokningssidan." });
+  } else if (m.includes("mina bokningar") || m.includes("mina tider")) {
     router.push('/my-bookings');
-    chatMessages.value.push({ sender: 'chatgpt', text: "📋 Jag har skickat dig till sidan för dina bokningar." });
-  } else if (lowerMessage.includes("avboka tid") || lowerMessage.includes("avbokning")) {
+    chatMessages.value.push({ sender: 'chatgpt', text: "📋 Här ser du dina bokningar." });
+  } else if (m.includes("avboka") || m.includes("avbokning")) {
     router.push('/cancel-booking');
-    chatMessages.value.push({ sender: 'chatgpt', text: "⚠️ Du kan avboka din tid här. Välj bokningen och klicka på ‘Avboka’." });
+    chatMessages.value.push({ sender: 'chatgpt', text: "⚠️ Klicka på avbokning och välj tiden du vill ta bort." });
   }
 };
-
-const isRelevantQuestion = (message) => {
-  return allowedKeywords.some(keyword => message.toLowerCase().includes(keyword));
-};
 </script>
+
+
 
 <template>
   <div class="support">

@@ -84,7 +84,6 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import api from '../services/api';
 
-
 const router = useRouter();
 
 const selectedDate = ref('');
@@ -100,13 +99,15 @@ const today = new Date().toISOString().split('T')[0];
 
 const apiKey = import.meta.env.VITE_BREVO_API_KEY;
 
+const API_BASE = import.meta.env.VITE_API_URL + '/api';
+
+
 const playSound = (type) => {
   const sounds = {
     success: '/sounds/success.mp3',
     error: '/sounds/error.mp3',
     info: '/sounds/info.mp3',
     logout: '/sounds/logout.mp3'
-    
   };
   const sound = new Audio(sounds[type] || sounds.info);
   sound.volume = 0.7;
@@ -154,7 +155,7 @@ watch(selectedDate, async () => {
   }
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/bookings/available-times?date=${selectedDate.value}`);
+    const res = await axios.get(`${API_BASE}/bookings/available-times?date=${selectedDate.value}`);
     let times = res.data.available;
 
     if (isToday) {
@@ -194,7 +195,7 @@ const deleteAccount = async () => {
       return;
     }
 
-    await axios.delete(`http://localhost:3000/api/patients/${patient.id}`);
+    await axios.delete(`${API_BASE}/patients/${patient.id}`); 
     playSound('success');
     alert('Ditt konto har raderats.');
     logout();
@@ -214,7 +215,6 @@ const isWeekend = computed(() => {
 const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const isValidPhone = phone =>
   /^07\d{8}$/.test(phone) || /^\+467\d{8}$/.test(phone);
-
 
 const generateMeetingLink = async () => {
   if (!selectedDate.value || !selectedTime.value || !name.value || !phone.value || !email.value) {
@@ -290,8 +290,8 @@ const generateMeetingLink = async () => {
     isLoading.value = false;
   }
 };
-
 </script>
+
 
 <style scoped>
 .booking-container {
