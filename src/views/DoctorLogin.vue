@@ -50,7 +50,7 @@
     }
   
     try {
-      const response = await api.loginDoctor(trimmedCode); // 👈 Använd funktionen från api.js
+      const response = await api.loginDoctor(trimmedCode);
       const doctor = response.data.data;
   
       if (doctor?.name) {
