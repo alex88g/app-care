@@ -50,7 +50,8 @@ defineEmits(['edit', 'save', 'cancel', 'delete']);
 const availableHours = ref([]);
 const today = new Date().toISOString().split('T')[0];
 
-const API_BASE = import.meta.env.VITE_API_URL + '/api';
+const API_BASE = import.meta.env.VITE_API_URL;
+
 
 const formattedDate = computed(() => {
   if (!props.booking.date) return 'Okänd';
