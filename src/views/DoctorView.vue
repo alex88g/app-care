@@ -65,6 +65,8 @@ const search = ref('');
 const doctorName = ref('');
 const sortOrder = ref('asc');
 
+const API_BASE = '/api';
+
 const playSound = (type) => {
   const sounds = {
     success: "/sounds/success.mp3",
@@ -72,12 +74,10 @@ const playSound = (type) => {
     info: "/sounds/info.mp3",
     logout: "/sounds/logout.mp3"
   };
-
   const audio = new Audio(sounds[type] || sounds.success);
   audio.volume = 0.7;
   audio.play().catch(() => {});
 };
-
 
 const fetchBookings = async () => {
   isLoading.value = true;
@@ -96,7 +96,6 @@ const fetchBookings = async () => {
     isLoading.value = false;
   }
 };
-
 
 const updateAvailableTimes = async (booking) => {
   const selected = new Date(booking.date);
@@ -120,7 +119,7 @@ const updateAvailableTimes = async (booking) => {
   }
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/bookings/available-times?date=${booking.date}`);
+    const res = await axios.get(`${API_BASE}/bookings/available-times?date=${booking.date}`);
     let times = res.data.available;
 
     if (isToday) {
@@ -250,6 +249,7 @@ onMounted(() => {
   });
 });
 </script>
+
 
 <style scoped>
 .booking-container {
