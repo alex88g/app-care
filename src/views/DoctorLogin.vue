@@ -27,16 +27,14 @@
   <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import axios from 'axios';
   import { useToastSound } from '../composables/useToastSound';
+  import api from '../services/api'; // 👈 Använd din api.js här!
   
   const code = ref('');
   const errorMessage = ref('');
   const isLoading = ref(false);
   const router = useRouter();
   const { playSound } = useToastSound();
-
-  const API_BASE = '/api';
   
   const handleLogin = async () => {
     errorMessage.value = '';
@@ -52,10 +50,7 @@
     }
   
     try {
-      const response = await axios.post(`${API_BASE}/doctors/login`, {
-        code: trimmedCode
-      });
-  
+      const response = await api.loginDoctor(trimmedCode); // 👈 Använd funktionen från api.js
       const doctor = response.data.data;
   
       if (doctor?.name) {
@@ -80,7 +75,8 @@
       isLoading.value = false;
     }
   };
-</script>
+  </script>
+  
 
   
   

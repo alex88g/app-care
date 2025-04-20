@@ -99,9 +99,6 @@ const today = new Date().toISOString().split('T')[0];
 
 const apiKey = import.meta.env.VITE_BREVO_API_KEY;
 
-const API_BASE = import.meta.env.VITE_API_URL + '/api';
-
-
 const playSound = (type) => {
   const sounds = {
     success: '/sounds/success.mp3',
@@ -155,7 +152,7 @@ watch(selectedDate, async () => {
   }
 
   try {
-    const res = await axios.get(`${API_BASE}/bookings/available-times?date=${selectedDate.value}`);
+    const res = await api.getAvailableTimes(selectedDate.value);
     let times = res.data.available;
 
     if (isToday) {
@@ -195,7 +192,7 @@ const deleteAccount = async () => {
       return;
     }
 
-    await axios.delete(`${API_BASE}/patients/${patient.id}`); 
+    await api.deletePatient(patient.id);
     playSound('success');
     alert('Ditt konto har raderats.');
     logout();
@@ -246,8 +243,6 @@ const generateMeetingLink = async () => {
       return;
     }
 
-    console.log("📦 Skickar bokning för patient ID:", patient.id);
-
     const check = await api.getAvailableTimes(selectedDate.value);
     if (!check.data.available.includes(selectedTime.value)) {
       bookingStatus.value = '❌ Den valda tiden är redan bokad. Välj en annan.';
@@ -291,7 +286,6 @@ const generateMeetingLink = async () => {
   }
 };
 </script>
-
 
 <style scoped>
 .booking-container {

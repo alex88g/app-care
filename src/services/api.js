@@ -1,25 +1,24 @@
 import axios from 'axios';
 
-// Använd Railway-url från .env eller fallback till lokal dev
-const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8080') + '/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE = `${BASE_URL}/api`;
 
-// Formatera svenska nummer till +46
 const formatPhone = (phone) => {
   return phone.startsWith('+46') ? phone : '+46' + phone.replace(/^0/, '');
 };
 
 const api = {
   sendOTP: (phone) =>
-    axios.post(`${API_BASE}/otp/send`, { phone: formatPhone(phone) }),
+    axios.post(`${API_BASE}/auth/otp/send`, { phone: formatPhone(phone) }),
 
   verifyOTP: (phone, code) =>
-    axios.post(`${API_BASE}/otp/verify`, { phone: formatPhone(phone), code }),
+    axios.post(`${API_BASE}/auth/otp/verify`, { phone: formatPhone(phone), code }),
 
   loginPatient: (phone) =>
-    axios.post(`${API_BASE}/patients/login`, { phone: formatPhone(phone) }),
+    axios.post(`${API_BASE}/auth/patients/login`, { phone: formatPhone(phone) }),
 
   registerPatient: (name, phone, ssn, email) =>
-    axios.post(`${API_BASE}/patients/register`, {
+    axios.post(`${API_BASE}/auth/patients/register`, {
       name,
       phone: formatPhone(phone),
       ssn,
@@ -27,13 +26,13 @@ const api = {
     }),
 
   deletePatient: (id) =>
-    axios.delete(`${API_BASE}/patients/${id}`),
-
-  loginDoctor: (code) =>
-    axios.post(`${API_BASE}/doctors/login`, { code }),
+    axios.delete(`${API_BASE}/auth/patients/${id}`),
 
   checkPhone: (phone) =>
-    axios.post(`${API_BASE}/patients/check-phone`, { phone: formatPhone(phone) }),
+    axios.post(`${API_BASE}/auth/patients/check-phone`, { phone: formatPhone(phone) }),
+
+  loginDoctor: (code) =>
+    axios.post(`${API_BASE}/auth/doctors/login`, { code }),
 
   getBookings: () =>
     axios.get(`${API_BASE}/bookings`),
