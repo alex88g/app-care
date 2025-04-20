@@ -28,7 +28,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useToastSound } from '../composables/useToastSound';
-  import api from '../services/api'; // 👈 Använd din api.js här!
+  import api from '../services/api'; 
   
   const code = ref('');
   const errorMessage = ref('');
