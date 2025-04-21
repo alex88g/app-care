@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/:path*",
+        "destination": "https://app-care-db-production.up.railway.app/api/:path*"
+      }
+    ]
+  }
+  
